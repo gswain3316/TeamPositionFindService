@@ -22,7 +22,7 @@ public class StandingController {
 	
 	@GetMapping("/")
 	public String hello() {
-		return "Welocome to the REST microservice !!";
+		return "Welocome to the REST microservice !! \n Run http://localhost:8888/getStandingPositionForTeam/England/Birmingham/Championship";
 	}
 
 	@GetMapping("/getStandingPositionForTeam/{countryName}/{teamName}/{leagueName}")
