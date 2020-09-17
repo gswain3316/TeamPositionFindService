@@ -8,7 +8,7 @@ node{
         bat "${mvn} clean package"
     }
     stage('Build Docker Image'){
-        bat 'docker build -t gswain3316/footballAssignment:1.0.0 .'
+        bat 'docker build -t gswain3316/footballassignment:1.0.0 .'
     }
     stage('Push docker image to dockerhub registry'){
         withDockerRegistry(credentialsId: 'dockerHubCredential', url: 'https://www.docker.com/') {
