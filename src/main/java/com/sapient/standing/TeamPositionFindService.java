@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-public class TeamStandingMicroserviceApplication {
+public class TeamPositionFindService {
 
 	@Bean
 	public RestTemplate restTemplate() {
@@ -14,7 +14,7 @@ public class TeamStandingMicroserviceApplication {
 	}
 	
 	public static void main(String[] args) {
-		SpringApplication.run(TeamStandingMicroserviceApplication.class, args);
+		SpringApplication.run(TeamPositionFindService.class, args);
 	}
 
 }

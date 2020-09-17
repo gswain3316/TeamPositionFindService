@@ -1,36 +1,22 @@
-pipeline {
-	agent any
-	
-	tools{
-		maven "3.6.3"
-	}
-	
-	stages {
-	
-	 	stage('Checkout') {
-            git url: 'https://github.com/gswain3316/football5/tree/master/Team_Standing_microservice', branch: 'master'
-        }
-	
-		triggers {
-		pollSCM '*****'
-		}
-	
-		stage('Build'){
-			sh 'mvn clean install'
-		}
-		
-		stage('Build Docker Image'){
-			sh 'docker build -t gswain3316/football5:1.0.0'
-		}
-		stage ('Push Docker Image') {
-            sh 'docker login -u gswain3316 -p Qwerty@123'
-            sh 'docker push gswain3316/football5:1.0.0'
-        }
-        stage ('Run Container on AWS Server') {
-            def dockerRun = 'docker run -p 8080:8080 -d --name footballApp gswain3316/football5:1.0.0'
-            sshagent(['dev-server']){
-            	sh "ssh -o StrictHostKeyChecking=no Ubuntu@18.217.63.227 ${dockerRun}"
-            }
-        }
-	}
+node{
+        def mvnHome = tool name: 'maven-3.6.3', type: 'maven'
+        def mvn = "${mvnHome}/bin/mvn"
+    stage('SCM Checkout'){
+        git credentialsId: 'git-credentials', url: 'https://github.com/gswain3316/TeamPositionFindService'
+    }
+    stage('Mvn package jar'){
+        bat "${mvn} clean package"
+    }
+    stage('Build Docker Image'){
+        bat 'docker build -t gswain3316/footballAssignment:1.0.0 .'
+    }
+    stage('Push docker image to dockerhub registry'){
+        withDockerRegistry(credentialsId: 'dockerHubCredential', url: 'https://www.docker.com/') {
+        bat 'docker login docker.io'
+        bat 'docker push gswain3316/footballAssignment:1.0.0'
+    }
+    }
+    stage('Docker run container on server'){
+        bat 'docker run -dp 8888:8888 gswain3316/footballAssignment:1.0.0'
+    }
 }

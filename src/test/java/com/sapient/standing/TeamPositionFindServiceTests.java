@@ -16,7 +16,7 @@ import com.sapient.standing.services.StandingControllerService;
 
 @SpringBootTest
 @EnableWebMvc
-class TeamStandingMicroserviceApplicationTests {
+class TeamPositionFindServiceTests {
 
 
 	@MockBean
