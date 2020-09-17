@@ -13,10 +13,10 @@ node{
     stage('Push docker image to dockerhub registry'){
         withDockerRegistry(credentialsId: 'dockerHubCredential', url: 'https://www.docker.com/') {
         bat 'docker login docker.io'
-        bat 'docker push gswain3316/footballAssignment:1.0.0'
+        bat 'docker push gswain3316/footballassignment:1.0.0'
     }
     }
     stage('Docker run container on server'){
-        bat 'docker run -dp 8888:8888 gswain3316/footballAssignment:1.0.0'
+        bat 'docker run -dp 8888:8888 gswain3316/footballassignment:1.0.0'
     }
 }
